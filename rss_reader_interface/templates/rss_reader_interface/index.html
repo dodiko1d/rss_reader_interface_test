@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>RSS Reader Interface</title>
+</head>
+<body>
+<header>
+<h1 class="title">RSS Reader</h1>
+<div class="current-link">
+    <span class="current-link__text">Current RSS Link:</span>
+    <span class="current-link__value">{{ rss_feed_url }}</span>
+    <a href="?rss_feed_url='{{ rss_feed_url }}'"><button>Update</button></a>
+</div>
+<form class="change-link-form" action="" method="post">
+    {% csrf_token %}
+    {{ form }}
+    <input type="submit" value="Change RSS feed url">
+</form>
+</header>
+{% for item in recent_feed_item %}
+    <a class="item-page-link" href="/{{ item.index }}">
+        <div class="article_in_list_preview">
+            <div class="thumbnail-wrapper">
+                {% if item.thumbnail_url != 'None' %}
+                    <img class="thumbnail" alt="{{ item.title }}" src="{{ item.thumbnail_url }}" draggable="false">
+                {% else %}
+                    <div class="thumbnail-replacer">Can't load image</div>
+                {% endif %}
+            </div>
+            <div class="info-column">
+                <div class="info-column__title">{{ item.title }}</div>
+                <div class="info-column__date">{{ item.date }}</div>
+            </div>
+    {#        {% if item.source_url != 'Unknown source' %}#}
+    {#            <a href="{{ item.source_url }}"><button class="source-button">Link</button></a>#}
+    {#        {% else %}#}
+    {#            <button class="unknown-source-button">{{ item.source_url }}</button>#}
+    {#        {% endif %}#}
+        </div>
+    </a>
+{% endfor %}
+</body>
+<style>
+:root {
+    --gray: #212121;
+    --white: #ffffff;
+    --basic-indent: 20px;
+    --basic-transition-duration: 1.3s;
+}
+
+header {
+    position: sticky;
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    top: 0;
+    color: var(--gray);
+    background-color: var(--white);
+    padding: var(--basic-indent);
+    box-shadow: var(--gray) 0 2px 0 0;
+    user-select: none;
+    -moz-user-select: none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+    -o-user-select: none;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0;
+    padding: 0 20vw var(--basic-indent);
+    user-select: none;
+    -moz-user-select: none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+    -o-user-select: none;
+}
+
+.current-link, .change-link-form {
+    display: flex;
+    flex-direction: row;
+    justify-content: start;
+    margin-bottom: calc(var(--basic-indent) / 2);
+    align-items: center;
+    transition-duration: var(--basic-transition-duration);
+}
+
+.current-link button, .change-link-form input {
+    background-color: var(--white);
+    border-radius: 0;
+    border: 1.5px dashed var(--gray);
+    transition-duration: var(--basic-transition-duration);
+}
+
+.current-link *, .change-link-form * {
+    margin-right: calc(var(--basic-indent) / 2);
+}
+
+.title {
+    font-size: 2rem;
+}
+
+header:hover, header:active {
+    background-color: var(--gray);
+    color: var(--white);
+    transition-duration: var(--basic-transition-duration);
+}
+
+header:hover .current-link button, header:active .current-link button,
+header:hover .change-link-form input, header:active .change-link-form input {
+    border: 0;
+}
+
+.article_in_list_preview {
+    display: grid;
+    cursor: pointer;
+    margin-bottom: var(--basic-indent);
+    width: 90%;
+    grid-template-columns: 1fr 2fr;
+    transition-duration: var(--basic-transition-duration);
+    user-select: none;
+    -moz-user-select: none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+    -o-user-select: none;
+}
+
+.article_in_list_preview:first-of-type {
+    margin-top: var(--basic-indent);
+}
+.article_in_list_preview:hover, .article_in_list_preview:active {
+    background-color: var(--gray);
+    color: var(--white);
+    transform: scale(1.13);
+}
+
+.article_in_list_preview:hover .thumbnail-wrapper, .article_in_list_preview:active .thumbnail-wrapper {
+    border-radius: 0;
+}
+
+.article_in_list_preview:hover .thumbnail-replacer, .article_in_list_preview:active .thumbnail-replacer {
+    background-color: var(--white);
+    color: var(--gray);
+    border-radius: 0;
+}
+
+.info-column__title {
+    font-weight: bold;
+    width: 100%;
+    padding: 0 calc(var(--basic-indent) / 2)
+}
+
+.info-column__date {
+    width: 17em;
+    text-align: right;
+}
+
+.info-column {
+    display: flex;
+    height: 3em;
+    padding: var(--basic-indent);
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: start;
+}
+
+.thumbnail-wrapper {
+    display: inline-flex;
+    justify-self: start;
+    border-radius: calc(var(--basic-indent) / 2);
+    justify-content: center;
+    align-items: center;
+    height: 7vw;
+    width: 7vw;
+    overflow: hidden;
+    transition-duration: var(--basic-transition-duration);
+}
+
+.thumbnail {
+    height: 7vw;
+    transition-duration: var(--basic-transition-duration);
+    user-select: none;
+    -moz-user-select: none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+    -o-user-select: none;
+}
+
+.thumbnail-replacer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: var(--white);
+    background-color: var(--gray);
+    padding: calc(var(--basic-indent) / 2);
+    width: 7vw;
+    height: 7vw;
+    transition-duration: var(--basic-transition-duration);
+}
+
+.item-page-link {
+    color: var(--gray);
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    text-decoration: none;
+}
+</style>
+</html>

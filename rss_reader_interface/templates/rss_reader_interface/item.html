@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Item {{ item_data.index }}</title>
+</head>
+<body>
+<div class="item-data-container">
+    <a class="item-return" href="/return_to_index">&#9166;</a>
+    <h1 class="item-title">{{ item_data.title }}</h1>
+    <div class="item-content">
+        <div class="thumbnail-wrapper">
+            {% if item_data.thumbnail_url != 'None' %}
+                <img class="thumbnail" alt="{{ item_data.title }}" src="{{ item_data.thumbnail_url }}" draggable="false">
+            {% else %}
+                <div class="thumbnail-replacer">Can't load image</div>
+            {% endif %}
+        </div>
+        <a href="{{ item.source_url }}">
+            <div class="item-more-info">
+                <div class="item-more-info__text">
+                    More info
+                </div>
+            </div>
+        </a>
+    </div>
+    <div class="item-source-link">Source: <a href="{{ item.source_url }}">{{ item.source_url }}</a></div>
+    <div class="item-date">{{ item_data.date }}</div>
+</div>
+</body>
+<style>
+    :root {
+        --gray: #212121;
+        --white: #ffffff;
+        --yellow: #FFF176;
+        --basic-indent: 20px;
+        --basic-transition-duration: 1.3s;
+    }
+    body {
+        margin: 0;
+        width: 100vw;
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        user-select: none;
+        -moz-user-select: none;
+        -khtml-user-select: none;
+        -webkit-user-select: none;
+        -o-user-select: none;
+    }
+
+    .item-content {
+        position: relative;
+        width: 80%;
+        transition-duration: var(--basic-transition-duration);
+    }
+
+
+    .thumbnail-wrapper {
+        position: absolute;
+        left: 0;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: start;
+        overflow: hidden;
+        height: 60vh;
+        width: 60%;
+        transition-duration: var(--basic-transition-duration);
+    }
+
+    .item-content:hover .thumbnail, .item-content:active .thumbnail,
+    .item-content:hover .thumbnail-replacer, .item-content:active .thumbnail-replacer {
+        transform: translate(-100%);
+    }
+
+    .item-content:hover .item-more-info, .item-content:active .item-more-info {
+        background-color: var(--yellow);
+        width: 100%;
+    }
+
+    .item-content:hover .item-more-info__text, .item-content:active .item-more-info__text {
+        transform: rotate(-90deg);
+        font-size: 2.5em;
+    }
+
+    .item-data-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 80%;
+        height: 100%;
+    }
+
+    .thumbnail {
+        transition-duration: var(--basic-transition-duration);
+        user-select: none;
+        -moz-user-select: none;
+        -khtml-user-select: none;
+        -webkit-user-select: none;
+        -o-user-select: none;
+    }
+
+    .thumbnail-replacer {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: var(--white);
+        background-color: var(--gray);
+        padding: calc(var(--basic-indent) / 2);
+        width: 7vw;
+        height: 7vw;
+        transition-duration: var(--basic-transition-duration);
+    }
+
+    .item-more-info {
+        position: absolute;
+        color: var(--gray);
+        z-index: 1000;
+        right: 0;
+        height: 60vh;
+        width: 39%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        writing-mode: vertical-lr;
+        text-orientation: mixed;
+        transition-duration: var(--basic-transition-duration);
+    }
+
+    .item-more-info__text {
+        transform: rotate(180deg);
+    }
+
+    .item-date {
+        position: absolute;
+        bottom: calc(var(--basic-indent) * 1.5);
+        right: calc(var(--basic-indent) * 1.5);
+        margin-top: var(--basic-indent);
+        justify-self: end;
+        transition-duration: var(--basic-transition-duration);
+    }
+
+    .item-source-link {
+        position: absolute;
+        bottom: calc(var(--basic-indent) * 1.5);
+        left: calc(var(--basic-indent) * 1.5);
+    }
+
+    .item-return {
+        position: absolute;
+        top: calc(var(--basic-indent) * 1.5);
+        right: calc(var(--basic-indent) * 1.5);
+        font-size: 3em;
+        color: var(--gray);
+        text-decoration: none;
+        transition-duration: var(--basic-transition-duration)
+    }
+
+    .item-return:hover {
+        border-radius: calc(var(--basic-indent) / 1.2);
+        background-color: var(--gray);
+        font-weight: bolder;
+        color: var(--yellow);
+    }
+</style>
+</html>
