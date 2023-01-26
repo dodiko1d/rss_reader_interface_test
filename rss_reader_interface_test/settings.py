@@ -23,11 +23,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-23pp6opvspwgs^6d3f%a(yx908k$s#rw9xytvux76xa@z&&_cf'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
-ALLOWED_HOSTS = [
-    'music-sitetest.space'
-]
+ALLOWED_HOSTS = []
 
 
 # Application definition
