@@ -1,10 +1,7 @@
-import requests
 import typing as tp
-import bs4
 import datetime
 from dateutil import parser
 from . import models
-import re
 import feedparser
 from django.db import transaction
 
